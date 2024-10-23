@@ -5,7 +5,7 @@ export const getCoordinates = async (location: string) => {
     )
 
     if (!response.ok) {
-      throw new Error(`HTTP Error: ${response.status}`)
+      throw new Error(`Unable to find the coordinates: ${response.status}`)
     }
 
     const data = await response.json()
