@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
-import { View, Text, ActivityIndicator, StyleSheet } from 'react-native'
+import { View, ActivityIndicator, StyleSheet } from 'react-native'
+import { Link } from 'expo-router'
 import * as Location from 'expo-location'
-import { getWeatherByLocation } from '../services/weatherService'
-import { FIXED_LOCATIONS, DEFAULT_LOCATION } from '../constants/Locations'
+import { getWeatherByLocation } from '@/services/weatherService'
+import { FIXED_LOCATIONS, DEFAULT_LOCATION } from '@/constants/Locations'
+import LocationCard from '@/components/LocationCard'
 
 type WeatherData = {
   properties: {
@@ -20,6 +22,8 @@ type WeatherData = {
 
 type WeatherState = {
   name: string
+  lat: number
+  lon: number
   weather: WeatherData | null
   error: string | null
 }
@@ -31,9 +35,9 @@ export default function Dashboard() {
   const fetchWeatherData = async (location: { lat: number; lon: number }, name: string): Promise<WeatherState> => {
     try {
       const weatherData = await getWeatherByLocation(location.lat, location.lon)
-      return { name, weather: weatherData, error: null }
+      return { name, lat: location.lat, lon: location.lon, weather: weatherData, error: null }
     } catch (error) {
-      return { name, weather: null, error: `Failed to fetch weather for ${name}` }
+      return { name, lat: location.lat, lon: location.lon, weather: null, error: `Failed to fetch weather for ${name}` }
     }
   }
 
@@ -54,7 +58,7 @@ export default function Dashboard() {
           return await fetchWeatherData({ lat, lon }, name)
         }
       } catch (error) {
-        return { name: 'Your Location', weather: null, error: 'Failed to fetch weather for your location'}
+        return { name: 'Your Location', lat: 0, lon: 0, weather: null, error: 'Failed to fetch weather for your location'}
       }
     })()
 
@@ -84,14 +88,20 @@ export default function Dashboard() {
     <View style={styles.container}>
       {weathers.map((location) => (
         <View key={location.name}>
-          <Text style={styles.header}>{location.name}</Text>
-          {location.weather ? (
-            <Text>
-              Temperature: {location.weather.properties.timeseries[0].data.instant.details.air_temperature} °C
-            </Text>
-          ) : (
-            <Text>{location.error}</Text>
-          )}
+          <Link href={{
+            pathname: '/details',
+            params: {
+              lon: location.lon,
+              lat: location.lat,
+              name: location.name,
+            },
+          }}>
+            <LocationCard
+              name={location.name}
+              error={location.error}
+              temperature={location.weather ? location.weather.properties.timeseries[0].data.instant.details.air_temperature : null}
+            />
+          </Link>
         </View>
       ))}
     </View>

@@ -1,11 +1,11 @@
 import { render, waitFor, screen } from '@testing-library/react-native'
-import Dashboard from '../../app/index'
+import Dashboard from '@/app/index'
 import * as Location from 'expo-location'
-import { getWeatherByLocation } from '../../services/weatherService'
-import { FIXED_LOCATIONS, DEFAULT_LOCATION } from '../../constants/Locations'
+import { getWeatherByLocation } from '@/services/weatherService'
+import { FIXED_LOCATIONS, DEFAULT_LOCATION } from '@/constants/Locations'
 
 jest.mock('expo-location')
-jest.mock('../../services/weatherService', () => ({
+jest.mock('@/services/weatherService', () => ({
   getWeatherByLocation: jest.fn(),
 }))
 
