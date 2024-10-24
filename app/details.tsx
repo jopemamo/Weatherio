@@ -33,7 +33,7 @@ export default function WeatherDetail() {
   const fetchDetails = async () => {
     try {
       setLoading(true)
-      const data = await getWeatherByLocation(+lat, +lon)
+      const data = await getWeatherByLocation(parseFloat(lat), parseFloat(lon))
       setWeatherDetails(data)
     } catch (error) {
       console.error(error)
