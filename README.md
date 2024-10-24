@@ -15,6 +15,11 @@ Weatherio is a simple Weather App that shows the weather at your current locatio
    ```bash
     npx expo start
    ```
+   In another terminal
+
+   ```bash
+    npm run start-sun-server
+   ```
 
 In the output, you'll find options to open the app in a
 
@@ -33,7 +38,6 @@ npm run test
 ## Future Improvements
 
 - Show the name of your current location.
-- Sunset and sunrise in the detailed view.
 - UI/UX Enhancements: Refine the user interface for better accessibility and aesthetic appeal.
 - Allow to save locations.
 
