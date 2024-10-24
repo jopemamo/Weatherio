@@ -1,3 +1,4 @@
+import { forwardRef } from 'react'
 import { Text, StyleSheet, TouchableOpacity } from 'react-native'
 
 type LocationCardProps = {
@@ -7,9 +8,9 @@ type LocationCardProps = {
   onPress?: () => void
 }
 
-const LocationCard = ({ name, temperature, error, onPress }: LocationCardProps) => {
+const LocationCard = forwardRef<TouchableOpacity, LocationCardProps>(({ name, temperature, error, onPress }, ref) => {
   return (
-    <TouchableOpacity style={styles.card} onPress={onPress}>
+    <TouchableOpacity style={styles.card} onPress={onPress} ref={ref}>
       <Text style={styles.location}>{name}</Text>
       {error ? (
         <Text style={styles.error}>{error}</Text>
@@ -18,7 +19,7 @@ const LocationCard = ({ name, temperature, error, onPress }: LocationCardProps) 
       )}
     </TouchableOpacity>
   )
-}
+})
 
 const styles = StyleSheet.create({
   card: {
