@@ -1,21 +1,22 @@
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, StyleSheet, TouchableOpacity } from 'react-native'
 
 type LocationCardProps = {
   name: string
   temperature: number | null
   error: string | null
+  onPress?: () => void
 }
 
-const LocationCard = ({ name, temperature, error }: LocationCardProps) => {
+const LocationCard = ({ name, temperature, error, onPress }: LocationCardProps) => {
   return (
-    <View style={styles.card}>
+    <TouchableOpacity style={styles.card} onPress={onPress}>
       <Text style={styles.location}>{name}</Text>
       {error ? (
         <Text style={styles.error}>{error}</Text>
       ) : (
         <Text style={styles.temperature}>Temperature: {temperature} °C</Text>
       )}
-    </View>
+    </TouchableOpacity>
   )
 }
 

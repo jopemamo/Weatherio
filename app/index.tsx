@@ -95,7 +95,7 @@ export default function Dashboard() {
               lat: location.lat,
               name: location.name,
             },
-          }}>
+          }} asChild>
             <LocationCard
               name={location.name}
               error={location.error}
